@@ -267,8 +267,10 @@ namespace SpinnakerTest
             camSelControl.Width = 550;
             camSelControl.Height = 300;
 
+            // Spinnaker 연결 창 클릭 이벤트 등록 
             camSelControl.OnDeviceClicked += ConnectControls;
 
+            // Spinnaker 연결 창 전시 
             camSelControl.ShowModal(true);
         }
 
@@ -292,6 +294,7 @@ namespace SpinnakerTest
 
             camSelControl.Close();
         }
+
         private void ResetWindowControl()
         {
             try
@@ -342,6 +345,7 @@ namespace SpinnakerTest
         {
             try
             {
+                // 카메라 파라미터 설정 
                 ConfigurationCam(cam);
 
                 // Begin acquiring images
@@ -372,8 +376,8 @@ namespace SpinnakerTest
                 StringReg iModelName = nodeMap.GetNode<StringReg>("DeviceModelName");
                 string modelname = iModelName.ToString();
 
-                // Ax5
-                if (modelname.Contains("AX5"))
+                // 연결된 카메라의 기종에 따라 Width, Height, parameter 값 설정 
+                if (modelname.Contains("AX5")) // Ax5
                 {
                     stIntCamFrameArray = int320256;
                     mCurWidth = 320;
@@ -381,7 +385,7 @@ namespace SpinnakerTest
 
                     bmp = new Bitmap(mCurWidth, mCurHeight);
 
-
+                    // pixelformat 설정 
                     IEnum iPixelFormat = nodeMap.GetNode<IEnum>("PixelFormat");
                     if (iPixelFormat != null && iPixelFormat.IsWritable)
                     {
@@ -390,6 +394,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iPixelFormatMono14 : " + nodeMap.GetNode<IEnum>("PixelFormat").ToString());
                     }
 
+                    // digital output 설정 
                     IEnum iDigitalOutput = nodeMap.GetNode<IEnum>("DigitalOutput");
                     if (iDigitalOutput != null && iDigitalOutput.IsWritable)
                     {
@@ -398,6 +403,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iDigitalOutput14bit : " + nodeMap.GetNode<IEnum>("DigitalOutput").ToString());
                     }
 
+                    // TemperatureLinearMode 설정 - Offset 값 설정 
                     IEnum iTemperatureLinearMode = nodeMap.GetNode<IEnum>("TemperatureLinearMode");
                     if (iTemperatureLinearMode != null && iTemperatureLinearMode.IsWritable)
                     {
@@ -416,7 +422,7 @@ namespace SpinnakerTest
                         }
                     }
 
-                    CamDevice = "Ax5";
+                    CamDevice = "AX5";
                 }
                 else if (modelname.Contains("PT1000")) // FLIR Axx
                 {
@@ -426,6 +432,7 @@ namespace SpinnakerTest
 
                     bmp = new Bitmap(mCurWidth, mCurHeight);
 
+                    // pixelformat 설정 
                     IEnum iPixelFormat = nodeMap.GetNode<IEnum>("PixelFormat");
                     if (iPixelFormat != null && iPixelFormat.IsWritable)
                     {
@@ -434,6 +441,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iPixelFormatMono16 : " + nodeMap.GetNode<IEnum>("PixelFormat").ToString());
                     }
 
+                    // TemperatureLinearMode 설정 및 offset 값 설정 
                     IEnum iTemperatureLinearMode = nodeMap.GetNode<IEnum>("IRFormat");
                     if (iTemperatureLinearMode != null && iTemperatureLinearMode.IsWritable)
                     {
@@ -456,6 +464,7 @@ namespace SpinnakerTest
 
                     bmp = new Bitmap(mCurWidth, mCurHeight);
 
+                    // pixelformat 설정 
                     IEnum iPixelFormat = nodeMap.GetNode<IEnum>("PixelFormat");
                     if (iPixelFormat != null && iPixelFormat.IsWritable)
                     {
@@ -464,6 +473,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iPixelFormatMono16 : " + nodeMap.GetNode<IEnum>("PixelFormat").ToString());
                     }
 
+                    // TemperatureLinearMode 설정 및 Offset 값 설정 
                     IEnum iTemperatureLinearMode = nodeMap.GetNode<IEnum>("IRFormat");
                     if (iTemperatureLinearMode != null && iTemperatureLinearMode.IsWritable)
                     {
@@ -485,6 +495,7 @@ namespace SpinnakerTest
 
                     bmp = new Bitmap(mCurWidth, mCurHeight);
 
+                    // PixelFormat 설정 
                     IEnum iPixelFormat = nodeMap.GetNode<IEnum>("PixelFormat");
                     if (iPixelFormat != null && iPixelFormat.IsWritable)
                     {
@@ -493,6 +504,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iPixelFormatMono16 : " + nodeMap.GetNode<IEnum>("PixelFormat").ToString());
                     }
 
+                    // TemperatureLinearMode 설정 및 Offset값 설정 
                     IEnum iTemperatureLinearMode = nodeMap.GetNode<IEnum>("IRFormat");
                     if (iTemperatureLinearMode != null && iTemperatureLinearMode.IsWritable)
                     {
@@ -502,16 +514,6 @@ namespace SpinnakerTest
                         mConvertOffsetVal = mOffsetVal_01;
 
                         Console.WriteLine("iTemperatureLinearMode 100mk : " + nodeMap.GetNode<IEnum>("IRFormat").ToString());
-                    }
-
-                    IInteger iIntegerNode = nodeMap.GetNode<IInteger>("CurrentCase");
-                    if (iIntegerNode != null)
-                    {
-                        Int16 dataValue = (Int16)iIntegerNode.Value;
-
-                        //Low Temp Gain ( -20~ 175 )
-
-                        iIntegerNode.Value = (long)TempRangeVal;
                     }
 
                     CamDevice = "A70";
@@ -524,6 +526,7 @@ namespace SpinnakerTest
 
                     bmp = new Bitmap(mCurWidth, mCurHeight);
 
+                    // PixelFormat 설정 
                     IEnum iPixelFormat = nodeMap.GetNode<IEnum>("PixelFormat");
                     if (iPixelFormat != null && iPixelFormat.IsWritable)
                     {
@@ -532,6 +535,7 @@ namespace SpinnakerTest
                         Console.WriteLine("iPixelFormatMono16 : " + nodeMap.GetNode<IEnum>("PixelFormat").ToString());
                     }
 
+                    // TemperatureLinearMode 설정 및 Offset 값 설정 
                     IEnum iTemperatureLinearMode = nodeMap.GetNode<IEnum>("IRFormat");
                     if (iTemperatureLinearMode != null && iTemperatureLinearMode.IsWritable)
                     {
@@ -546,6 +550,8 @@ namespace SpinnakerTest
                     CamDevice = "A400";
 
                 }
+                
+                // 카메라 별 측정 온도 값 구성 및 설정 
                 TempRangeConf(nodeMap);
             }
             catch (Exception ex)
@@ -676,10 +682,10 @@ namespace SpinnakerTest
                     {
                         col = Color.FromArgb(255, 255 - (rVal - step * 3) * 4, 0);
                     }
-
-                    // Box 내 영역의 최대 최소 온도값 체크
+                   
                     bmp.SetPixel(x, y, col);
 
+                    // Box 내 영역의 최대 최소 온도값 체크
                     if (roiBox != null && roiBox.GetIsVisible())
                     {
                         roiBox.CheckXYinBox(x, y, data[a]);
@@ -771,8 +777,6 @@ namespace SpinnakerTest
                         break;
                     }
 
-                   
-
                     // Retrieve next received image and ensure image completion
                     using (IManagedImage rawImage = cam.GetNextImage())
                     {
@@ -785,9 +789,9 @@ namespace SpinnakerTest
                         }
                         else
                         {
+                            // 최고, 최저 온도 값을 섭씨 온도로 계산하여 저장  
                             double minValue = 0;
                             double maxValue = 0;
-                            // [0] convert to byte array to uint16
 
                             int uint16Count = 0;
                             ushort max16 = 0;
@@ -799,11 +803,13 @@ namespace SpinnakerTest
                             {
                                 if (a >= rawImage.ManagedData.Length)
                                 {
+                                    // 온도 값이 들어오지 않는 경우 / 카메라 변경 시 예외처리 
                                     return;
                                 }
 
                                 ushort sample = BitConverter.ToUInt16(rawImage.ManagedData, a);
 
+                                // 최고, 최저 온도 값 계산 및 좌표 계산 
                                 if (min16 >= sample)
                                 {
                                     minValue = ((float)(sample) * mConvertOffsetVal) - 273.15;
@@ -821,8 +827,9 @@ namespace SpinnakerTest
 
                                 }
 
-                                imgArray[uint16Count] = sample;
+                                imgArray[a/2] = sample;
                                 uint16Count++;
+
                             }
 
                             CtrlData_Receiver(imgArray, mCurWidth, mCurHeight, min16, max16);
@@ -888,21 +895,18 @@ namespace SpinnakerTest
         {
             try
             {
-                if (CamDevice == null) // 카메라가 연결되지 않은 경우 
+                // 카메라가 연결되지 않은 경우 
+                if (CamDevice == null) 
                 {
                     Console.WriteLine("No Connected Camera!");
                     return;
                 }
 
-                // 온도 range 항목 제거 
+                // 온도 range 항목 제거  
                 comboRanges.Items.Clear();
 
-                // Current Case 의 개수 (온도 range의 개수)
-                int numCases = (int)nodeMap.GetNode<Integer>("NumCases");
-
                 string[] retValue = null;
-                retValue = new string[numCases];
-
+                
                 // Ax5
                 if (CamDevice.Contains("AX5"))
                 {
@@ -919,14 +923,16 @@ namespace SpinnakerTest
                         for (int a = 0; a < countValue; a++)
                         {
                             retValue[a] = ee[a].DisplayName;
-
-                            System.Diagnostics.Debug.WriteLine("GainMode[" + a + "] : " + retValue[a]);
+                            RangeIndexData.Add((short)a); 
+                            Console.WriteLine("GainMode[" + a + "] : " + retValue[a]);
                         }
                     }
                 }
                 else
                 {
+                    int numCases = (int)nodeMap.GetNode<Integer>("NumCases");
                     IInteger QC = nodeMap.GetNode<IInteger>("QueryCase");
+                    IInteger CC = nodeMap.GetNode<IInteger>("CurrentCase");
                     Float QCLL = nodeMap.GetNode<Float>("QueryCaseLowLimit");
                     Float QCHL = nodeMap.GetNode<Float>("QueryCaseHighLimit");
                     BoolNode QCE = nodeMap.GetNode<BoolNode>("QueryCaseEnabled");
@@ -934,7 +940,8 @@ namespace SpinnakerTest
                     double lo, hi;
                     long i;
                     bool enabled;
-
+                    retValue = new string[numCases];
+                    int index = 0; 
                     for (i = 0; i < numCases; i++)
                     {
                         // Set case selector                        
@@ -949,19 +956,24 @@ namespace SpinnakerTest
                             string TempRange = string.Format(" {0}°C ~ {1}°C ", (lo - 273.15f).ToString("F0"), (hi - 273.15f).ToString("F0"));
 
                             //retValue는 온도 범위 저장 
-                            retValue[i] = TempRange;
+                            retValue[index] = TempRange;
+                            index++; 
 
-                            // RangeIndexData에는 CurrentCase 값이 저장 - ex) 1,2 
+                            // RangeIndexData에는 CurrentCase 값이 저장 - ex) 1, 2, 6, 7 ..등과 같은 
                             RangeIndexData.Add((short)i);
                         }
                     }
-
-                    for (int j = 0; j < retValue.Length; j++)
-                    {
-                        comboRanges.Items.Add(retValue[j]);
-                    }
+                    // 기본 설정은 0번 인덱스에 저장된 온도 범위로 설정
+                    CC.Value = RangeIndexData[0]; 
                 }
-                comboRanges.SelectedIndex = 0;  
+
+                for (int j = 0; j < retValue.Length; j++)
+                {
+                    // 온도 범위를 ComboBoxitem으로 추가 
+                    comboRanges.Items.Add(retValue[j]);
+                }
+
+                comboRanges.SelectedIndex = 0; 
             }
             catch (Exception ex)
             {
@@ -971,7 +983,7 @@ namespace SpinnakerTest
 
 
         /// <summary>
-        /// 카메라 내부 설정 Range Index List
+        /// 카메라 온도 범위 설정 변경 시 
         /// </summary>
         private void comboRanges_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -983,26 +995,43 @@ namespace SpinnakerTest
                     return;
                 }
 
-                INodeMap nodeMap = connectcam.GetNodeMap();
 
-                IInteger QueryCase = nodeMap.GetNode<IInteger>("QueryCase");
-                IInteger CurrentCase = nodeMap.GetNode<IInteger>("CurrentCase");
-                IBool bQueryCaseEnabled = nodeMap.GetNode<IBool>("QueryCaseEnabled");
-                IFloat dQueryCaseLowLimit = nodeMap.GetNode<IFloat>("QueryCaseLowLimit");
-                IFloat dQueryCaseHighLimit = nodeMap.GetNode<IFloat>("QueryCaseHighLimit");
-                double dLow = 0, dHigh = 0;
-
-                if (bQueryCaseEnabled.Value == true)
+                if (!CamDevice.Contains("AX5"))
                 {
-                    if (QueryCase != null)
+                    INodeMap nodeMap = connectcam.GetNodeMap();
+
+                    IInteger QueryCase = nodeMap.GetNode<IInteger>("QueryCase");
+                    IInteger CurrentCase = nodeMap.GetNode<IInteger>("CurrentCase");
+                    IBool bQueryCaseEnabled = nodeMap.GetNode<IBool>("QueryCaseEnabled");
+                    IFloat dQueryCaseLowLimit = nodeMap.GetNode<IFloat>("QueryCaseLowLimit");
+                    IFloat dQueryCaseHighLimit = nodeMap.GetNode<IFloat>("QueryCaseHighLimit");
+                    double dLow = 0, dHigh = 0;
+
+                    TempRangeVal = RangeIndexData[combobox.SelectedIndex];
+                    QueryCase.Value = TempRangeVal;
+
+                    if (bQueryCaseEnabled.Value == true)
                     {
-                        TempRangeVal = RangeIndexData[combobox.SelectedIndex];
-                        QueryCase.Value = TempRangeVal;
-                        dLow = dQueryCaseLowLimit.Value;
-                        dHigh = dQueryCaseHighLimit.Value;
-                        CurrentCase.Value = RangeIndexData[combobox.SelectedIndex];
+                        if (QueryCase != null)
+                        {
+                            dLow = dQueryCaseLowLimit.Value;
+                            dHigh = dQueryCaseHighLimit.Value;
+                            CurrentCase.Value = RangeIndexData[combobox.SelectedIndex];
+                        }
                     }
                 }
+                else
+                {
+                    INodeMap nodeMap = connectcam.GetNodeMap();
+                    IEnum SGM = nodeMap.GetNode<IEnum>("SensorGainMode");
+
+                    if (SGM != null)
+                    {
+                        SGM.Value = RangeIndexData[combobox.SelectedIndex];
+
+                    }
+                }
+                
             }
             catch (Exception ex)
             {
